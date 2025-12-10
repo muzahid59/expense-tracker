@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash([ -f /Users/muzahidul.islam/area59/expense-tracker/package.json ])",
+      "Bash(cat /Users/muzahidul.islam/area59/expense-tracker/package.json)"
+    ]
+  }
+}
