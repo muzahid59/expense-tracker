@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import { Cloud } from 'lucide-react';
 import { useExpenses } from '@/hooks/useExpenses';
 import Container from '@/components/layout/Container';
 import SummaryCard from '@/components/dashboard/SummaryCard';
@@ -7,6 +9,8 @@ import SpendingChart from '@/components/dashboard/SpendingChart';
 import CategoryChart from '@/components/dashboard/CategoryChart';
 import RecentExpenses from '@/components/dashboard/RecentExpenses';
 import EmptyState from '@/components/common/EmptyState';
+import ExportHub from '@/components/export-hub/ExportHub';
+import Button from '@/components/ui/Button';
 
 export default function DashboardPage() {
   const {
@@ -16,6 +20,8 @@ export default function DashboardPage() {
     allExpenses,
     isLoading,
   } = useExpenses();
+
+  const [isExportHubOpen, setIsExportHubOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -45,9 +51,17 @@ export default function DashboardPage() {
   return (
     <Container>
       <div className="py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Dashboard
-        </h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <Button
+            onClick={() => setIsExportHubOpen(true)}
+            variant="primary"
+            className="flex items-center bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+          >
+            <Cloud size={18} className="mr-2" />
+            Export Hub
+          </Button>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <SummaryCard
@@ -84,6 +98,12 @@ export default function DashboardPage() {
 
         <RecentExpenses expenses={allExpenses} />
       </div>
+
+      <ExportHub
+        isOpen={isExportHubOpen}
+        onClose={() => setIsExportHubOpen(false)}
+        expenses={allExpenses}
+      />
     </Container>
   );
 }
